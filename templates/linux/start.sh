@@ -28,6 +28,8 @@ if [ "$USE_LOCAL_MONGO" == "1" ]; then
     --link=mongodb:mongodb \
     --hostname="$HOSTNAME-$APPNAME" \
     --env=MONGO_URL=mongodb://mongodb:27017/$APPNAME \
+    --log-opt max-size=1g \
+    --log-opt max-file=2 \
     --name=$APPNAME \
     meteorhacks/meteord:base
 else
@@ -38,6 +40,8 @@ else
     --volume=$BUNDLE_PATH:/bundle \
     --hostname="$HOSTNAME-$APPNAME" \
     --env-file=$ENV_FILE \
+    --log-opt max-size=1g \
+    --log-opt max-file=2 \
     --name=$APPNAME \
     meteorhacks/meteord:base
 fi
@@ -54,6 +58,8 @@ fi
     --volume=/opt/$APPNAME/config/private.key:/private.key \
     --link=$APPNAME:backend \
     --publish=<%= sslConfig.port %>:443 \
+    --log-opt max-size=1g \
+    --log-opt max-file=2 \
     --name=$APPNAME-frontend \
     meteorhacks/mup-frontend-server /start.sh
 <% } %>
